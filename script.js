@@ -13,31 +13,38 @@ window.onload = setup;
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
-
-  const headerElem = document.createElement("header");
-  headerElem.innerHTML = `<h1>All Episodes (${episodeList.length} episodes)</h1>`;
-  rootElem.appendChild(headerElem);
-
-  const episodesContainer = document.createElement("div");
-  episodesContainer.classList.add("episodes-container");
+  rootElem.innerHTML = ""; // clear the root element before rendering
 
   episodeList.forEach((episode) => {
-    const { id, name, season, number, image, summary } = episode;
-    const code = `S${season.toString().padStart(2, "0")}E${number
-      .toString()
-      .padStart(2, "0")}`;
-    const episodeElem = document.createElement("div");
-    episodeElem.classList.add("episode");
-    episodeElem.innerHTML = `
-      <img src="${image.medium}" alt="${name}" />
-      <div class="episode-info">
-        <h2>${name} - ${code}</h2>
-        ${summary ? summary : "<p>No summary available</p>"}
-        <p><a href="http://www.tvmaze.com/episodes/${id}" target="_blank">See on TVMaze.com</a></p>
-      </div>
-    `;
-    episodesContainer.appendChild(episodeElem);
-  });
+    // create a card element for each episode
+    const card = document.createElement("div");
+    card.className = "card";
 
-  rootElem.appendChild(episodesContainer);
+    // create elements for the episode details
+    const title = document.createElement("h3");
+    title.textContent = `${episode.name} - S${String(episode.season).padStart(
+      2,
+      "0"
+    )}E${String(episode.number).padStart(2, "0")}`;
+
+    const image = document.createElement("img");
+    image.src = episode.image.medium;
+
+    const summary = document.createElement("p");
+    summary.innerHTML = episode.summary;
+
+    const link = document.createElement("a");
+    link.href = episode.url;
+    link.target = "_blank";
+    link.textContent = "View on TVMaze.com";
+
+    // append the episode details to the card element
+    card.appendChild(title);
+    card.appendChild(image);
+    card.appendChild(summary);
+    card.appendChild(link);
+
+    // append the card element to the root element
+    rootElem.appendChild(card);
+  });
 }
