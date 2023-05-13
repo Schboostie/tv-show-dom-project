@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat&family=Roboto&family=Secular+One&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
+      rel="stylesheet"
+    />
+    <title>TV Show Project</title>
+    <link href="newStyle.css" rel="stylesheet" />
+    <link href="footerStyles.css" rel="stylesheet" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  </head>
+
+  <body>
+    <header>
+      <h1>NewFlix!</h1>
+
+      <h2>TV Show DOM Project</h2>
+    </header>
+    <main>
+      <div id="head-app-shows" class="head-app-shows">
+        <input
+          type="text"
+          autocomplete="off"
+          placeholder="Search"
+          id="search-input-shows"
+        />
+
+        <select name="Shows" id="shows-search-drop">
+          <option value="all-shows">All Shows</option>
+        </select>
+
+        <span id="count-shows"></span>
+      </div>
+
+      <div id="head-app" class="head-app">
+        <button id="go-back">Back to Shows</button>
+
+        <select name="Shows" id="drop-shows">
+          <option value="all-shows">All Shows</option>
+        </select>
+
+        <select name="episodes" id="drop-episodes">
+          <option value="all">All Episodes</option>
+        </select>
+
+        <input
+          id="search-input"
+          type="text"
+          autocomplete="off"
+          placeholder="Search"
+        />
+
+        <span id="count-episodes"></span>
+      </div>
+
+      <div class="container">
+        <ul id="root" class="root"></ul>
+      </div>
+    </main>
+    <footer>
+      <p class="footer-text">
+        data sourced from
+        <a href="https://www.tvmaze.com/api" target="_blank">TV-Maze-API</a>
+      </p>
+    </footer>
+
+    <!-- Loads YOUR javascript code -->
+    <script src="newScript.js"></script>
+    <script src="newShows.js"></script>
+    <script src="footerJS.js"></script>
+  </body>
+</html>
