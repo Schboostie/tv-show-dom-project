@@ -7,11 +7,10 @@
 }
 
 .episode-card {
-  /*display: inline-block;*/
-  display: flex;
+  display: inline-block;
   width: 300px;
   align-self: flex-start; /* Set the default height of the element to flex-start */
-  height: 100px;
+  height: 450px;
   margin: 10px;
   padding: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);

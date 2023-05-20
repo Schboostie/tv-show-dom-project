@@ -1,5 +1,4 @@
 // Assuming you have a function getAllEpisodes() that returns an array of episode objects
-let episodes = [];
 
 // Function to pad a number with leading zeros to two digits
 function padNumber(num) {
@@ -44,42 +43,16 @@ function createEpisodeCard(episode) {
   return episodeCard;
 }
 
-// Function to display filtered episodes based on search term
-function displayFilteredEpisodes(searchTerm) {
+// Function to display all episodes on the page
+function displayEpisodes() {
   const rootElement = document.getElementById("root");
-  rootElement.innerHTML = ""; // Clear the existing episode cards
+  const episodes = getAllEpisodes();
 
-  let filteredEpisodes = episodes.filter((episode) => {
-    const episodeName = episode.name.toLowerCase();
-    const episodeSummary = episode.summary.toLowerCase();
-    return (
-      episodeName.includes(searchTerm) || episodeSummary.includes(searchTerm)
-    );
-  });
-
-  filteredEpisodes.forEach((episode) => {
+  episodes.forEach((episode) => {
     const episodeCard = createEpisodeCard(episode);
     rootElement.appendChild(episodeCard);
   });
-
-  const matchCountElement = document.getElementById("match-count");
-  matchCountElement.textContent = `Matched Episodes: ${filteredEpisodes.length}`;
 }
 
-// Function to handle the search input event
-function handleSearchInput(event) {
-  const searchTerm = event.target.value.toLowerCase();
-  displayFilteredEpisodes(searchTerm);
-}
-
-// Function to initialize the episode data and set up the search input event listener
-function initialize() {
-  const searchInput = document.getElementById("search-input");
-  searchInput.addEventListener("input", handleSearchInput);
-
-  episodes = getAllEpisodes();
-  displayFilteredEpisodes("");
-}
-
-// Call the initialize() function to set up the search functionality
-initialize();
+// Call the displayEpisodes() function to populate the page with episodes
+displayEpisodes();
