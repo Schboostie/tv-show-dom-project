@@ -7,9 +7,11 @@
 }
 
 .episode-card {
-  display: inline-block;
-
+  /*display: inline-block;*/
+  display: flex;
   width: 300px;
+  align-self: flex-start; /* Set the default height of the element to flex-start */
+  height: 100px;
   margin: 10px;
   padding: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -23,7 +25,7 @@
 }
 
 .episode-card img {
-  display: block;
+  /*display: block;*/
   margin: 10px auto;
   max-width: 100%;
 }
