@@ -1,4 +1,5 @@
 // Assuming you have a function getAllEpisodes() that returns an array of episode objects
+let episodes = [];
 
 // Function to pad a number with leading zeros to two digits
 function padNumber(num) {
@@ -43,16 +44,46 @@ function createEpisodeCard(episode) {
   return episodeCard;
 }
 
-// Function to display all episodes on the page
-function displayEpisodes() {
+// Function to display episodes based on search input
+function displayEpisodes(searchTerm) {
   const rootElement = document.getElementById("root");
-  const episodes = getAllEpisodes();
+  rootElement.innerHTML = ""; // Clear the previous results
 
-  episodes.forEach((episode) => {
+  let matchingEpisodes;
+  if (searchTerm.trim() === "") {
+    matchingEpisodes = episodes; // Show all episodes if search box is cleared
+  } else {
+    const searchRegex = new RegExp(searchTerm, "i"); // Case-insensitive search regex
+    matchingEpisodes = episodes.filter(
+      (episode) =>
+        searchRegex.test(episode.name) || searchRegex.test(episode.summary)
+    );
+  }
+
+  matchingEpisodes.forEach((episode) => {
     const episodeCard = createEpisodeCard(episode);
     rootElement.appendChild(episodeCard);
   });
+
+  const searchCount = document.getElementById("search-count");
+  searchCount.textContent = `Episodes found: ${matchingEpisodes.length}`;
 }
 
-// Call the displayEpisodes() function to populate the page with episodes
-displayEpisodes();
+// Function to handle search input changes
+function handleSearchInput() {
+  const searchInput = document.getElementById("search-input");
+  const searchTerm = searchInput.value.trim();
+  displayEpisodes(searchTerm);
+}
+
+// Function to initialize the app
+function initializeApp() {
+  const searchInput = document.getElementById("search-input");
+  searchInput.addEventListener("input", handleSearchInput);
+
+  episodes = getAllEpisodes(); // Fetch episodes from API or assign them manually
+  displayEpisodes("");
+}
+
+// Call the initializeApp() function to populate the page with episodes and set up the search functionality
+initializeApp();

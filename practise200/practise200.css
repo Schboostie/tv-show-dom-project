@@ -1,7 +1,31 @@
 #root {
   color: red;
 }
-.episode-card-big {
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-bar input[type="text"]:focus {
+  outline: none;
+  border-color: #0066ff;
+  box-shadow: 0 0 5px #0066ff;
+}
+
+#search-count {
+  color: #888;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+episode-card-big {
   display: flex;
   flex-wrap: wrap;
 }
