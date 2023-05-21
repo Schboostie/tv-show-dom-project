@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<!--A facetitious appellation representing the constantion I having with not being able to write a successful async function -->
+
+<!---------------------------------------------------------------------------->
+
+<html>
+  <head>
+    <title>Game of Thrones Episodes</title>
+  </head>
+  <body>
+    <h1>Game of Thrones Episodes</h1>
+    <div id="episodes"></div>
+
+    <script>
+      // Fetch function to retrieve episodes data
+      fetch("https://api.tvmaze.com/shows/82/episodes")
+        .then((response) => response.json())
+        .then((data) => {
+          const episodesContainer = document.getElementById("episodes");
+          data.forEach((episode) => {
+            const { name, season, number } = episode;
+            const episodeElement = document.createElement("p");
+            episodeElement.textContent = `Season ${season}, Episode ${number}: ${name}`;
+            episodesContainer.appendChild(episodeElement);
+          });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    </script>
+  </body>
+</html>

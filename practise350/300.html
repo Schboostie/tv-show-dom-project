@@ -10,25 +10,20 @@
 
   <body>
     <div class="search-bar">
-      <input type="text" id="search-input" placeholder="Search episodes..." />
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search episodes..."
+        list="episode-list"
+      />
+      <datalist id="episode-list"></datalist>
     </div>
-
-    <div class="select-container">
-      <select id="episode-select">
-        <option value="">All Episodes</option>
-      </select>
-    </div>
-
     <br />
     <br />
     <br />
     <div class="episode-card-big" id="root"></div>
 
-    <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
-    <!-- <script src="episodes300.js"></script> -->
-
     <!-- Loads YOUR javascript code -->
-    <script src="300.js"></script>
-    <!---  <script src="shows300.js"></script>       -->
+    <script src="practise200.js"></script>
   </body>
 </html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Game of Thrones Information</title>
+  </head>
+  <body>
+    <h1>Game of Thrones Information</h1>
+    <div id="info"></div>
+
+    <script>
+      // Fetch function to retrieve show information
+      fetch("http://api.tvmaze.com/shows/82")
+        .then((response) => response.json())
+        .then((data) => {
+          const infoContainer = document.getElementById("info");
+          const {
+            name,
+            genres,
+            premiered,
+            officialSite,
+            rating,
+            network,
+            image,
+            summary,
+          } = data;
+
+          const infoElement = document.createElement("div");
+
+          // Display show name
+          const nameElement = document.createElement("h2");
+          nameElement.textContent = name;
+          infoElement.appendChild(nameElement);
+
+          // Display show genres
+          const genresElement = document.createElement("p");
+          genresElement.textContent = "Genres: " + genres.join(", ");
+          infoElement.appendChild(genresElement);
+
+          // Display premiered date
+          const premieredElement = document.createElement("p");
+          premieredElement.textContent = "Premiered: " + premiered;
+          infoElement.appendChild(premieredElement);
+
+          // Display official site
+          const officialSiteElement = document.createElement("p");
+          const officialSiteLink = document.createElement("a");
+          officialSiteLink.href = officialSite;
+          officialSiteLink.textContent = "Official Site";
+          officialSiteElement.appendChild(officialSiteLink);
+          infoElement.appendChild(officialSiteElement);
+
+          // Display rating
+          const ratingElement = document.createElement("p");
+          ratingElement.textContent = "Rating: " + rating.average;
+          infoElement.appendChild(ratingElement);
+
+          // Display network
+          const networkElement = document.createElement("p");
+          networkElement.textContent = "Network: " + network.name;
+          infoElement.appendChild(networkElement);
+
+          // Display show image
+          const imageElement = document.createElement("img");
+          imageElement.src = image.medium;
+          infoElement.appendChild(imageElement);
+
+          // Display show summary
+          const summaryElement = document.createElement("div");
+          summaryElement.innerHTML = summary;
+          infoElement.appendChild(summaryElement);
+
+          infoContainer.appendChild(infoElement);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    </script>
+  </body>
+</html>
