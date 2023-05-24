@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All TV Shows</title>
+  </head>
+  <body>
+    <h1>All TV Shows</h1>
+    <input type="text" id="searchInput" placeholder="Search for a show" />
+    <select id="dropdown"></select>
+    <div id="shows"></div>
+
+    <script>
+      async function fetchAllShows() {
+        try {
+          const response = await fetch("https://api.tvmaze.com/shows");
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          throw new Error("Failed to fetch shows.");
+        }
+      }
+
+      async function fetchShow(showId) {
+        try {
+          const response = await fetch(
+            `https://api.tvmaze.com/shows/${showId}`
+          );
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          throw new Error(`Failed to fetch show with ID: ${showId}.`);
+        }
+      }
+
+      async function fetchAllEpisodes(showId) {
+        try {
+          const response = await fetch(
+            `https://api.tvmaze.com/shows/${showId}/episodes`
+          );
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          throw new Error(
+            `Failed to fetch episodes for show with ID: ${showId}.`
+          );
+        }
+      }
+
+      async function showsDisplay(shows) {
+        const showsContainer = document.getElementById("shows");
+
+        shows.forEach(async (show) => {
+          const showId = show.id;
+
+          try {
+            // Fetch individual show details
+            const showData = await fetchShow(showId);
+            const { name, genres, premiered } = showData;
+
+            // Create show element
+            const showElement = document.createElement("div");
+            showElement.classList.add("show");
+
+            // Display show name
+            const nameElement = document.createElement("h2");
+            nameElement.textContent = name;
+            showElement.appendChild(nameElement);
+
+            // Display show genres
+            const genresElement = document.createElement("p");
+            genresElement.textContent = "Genres: " + genres.join(", ");
+            showElement.appendChild(genresElement);
+
+            // Display premiered date
+            const premieredElement = document.createElement("p");
+            premieredElement.textContent = "Premiered: " + premiered;
+            showElement.appendChild(premieredElement);
+
+            // Fetch episodes for the show
+            const episodes = await fetchAllEpisodes(showId);
+
+            // Display number of episodes
+            const episodesElement = document.createElement("p");
+            episodesElement.textContent = "Episodes: " + episodes.length;
+            showElement.appendChild(episodesElement);
+
+            showsContainer.appendChild(showElement);
+          } catch (error) {
+            console.error(error);
+          }
+        });
+      }
+
+      async function setup() {
+        try {
+          const allShows = await fetchAllShows();
+          showsDisplay(allShows);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      // Call the setup function to fetch and display shows
+      setup();
+
+      // Function to handle search input
+      function handleSearchInput() {
+        const searchInput = document.getElementById("searchInput");
+        const searchTerm = searchInput.value.toLowerCase();
+
+        const shows = document.querySelectorAll(".show");
+
+        shows.forEach((show) => {
+          const showName = show.querySelector("h2").textContent.toLowerCase();
+
+          if (showName.includes(searchTerm)) {
+            show.style.display = "block";
+          } else {
+            show.style.display = "none";
+          }
+        });
+      }
+
+      // Add event listener to search input
+      const searchInput = document.getElementById("searchInput");
+      searchInput.addEventListener("input", handleSearchInput);
+
+      // Function to populate dropdown list
+      function populateDropdownList(shows) {
+        const dropdown = document.getElementById("dropdown");
+
+        shows.forEach((show) => {
+          const option = document.createElement("option");
+          option.value = show.id;
+          option.textContent = show.name;
+          dropdown.appendChild(option);
+        });
+      }
+
+      // Assuming you have a function getAllEpisodes() that returns an array of episode objects
+
+      // Function to pad a number with leading zeros to two digits
+      function padNumber(num) {
+        return num.toString().padStart(2, "0");
+      }
+
+      // Function to generate the episode code in the format S02E07
+      function generateEpisodeCode(season, episode) {
+        const paddedSeason = padNumber(season);
+        const paddedEpisode = padNumber(episode);
+        return `S${paddedSeason}E${paddedEpisode}`;
+      }
+
+      // Function to create an episode card element
+      function createEpisodeCard(episode) {
+        const episodeCard = document.createElement("div");
+        episodeCard.className = "episode-card";
+
+        const episodeName = document.createElement("h2");
+        episodeName.textContent = episode.name;
+        episodeCard.appendChild(episodeName);
+
+        const episodeCode = generateEpisodeCode(episode.season, episode.number);
+        const episodeInfo = document.createElement("p");
+        episodeInfo.textContent = `Episode Code: ${episodeCode}`;
+        episodeCard.appendChild(episodeInfo);
+
+        const episodeImage = document.createElement("img");
+        episodeImage.src = episode.image.medium;
+        episodeImage.alt = "Episode Image";
+        episodeCard.appendChild(episodeImage);
+
+        const episodeSummary = document.createElement("p");
+        episodeSummary.textContent = episode.summary;
+        episodeCard.appendChild(episodeSummary);
+
+        const episodeLink = document.createElement("a");
+        episodeLink.href = episode.url;
+        episodeLink.textContent = "View on TVMaze.com";
+        episodeCard.appendChild(episodeLink);
+
+        return episodeCard;
+      }
+
+      // Function to display all episodes on the page
+      function displayEpisodes() {
+        const rootElement = document.getElementById("root");
+        const episodes = getAllEpisodes();
+
+        episodes.forEach((episode) => {
+          const episodeCard = createEpisodeCard(episode);
+          rootElement.appendChild(episodeCard);
+        });
+      }
+
+      // Call the displayEpisodes() function to populate the page with episodes
+      displayEpisodes();
+
+      // Call the function to populate the dropdown list
+      fetchAllShows()
+        .then((shows) => {
+          populateDropdownList(shows);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    </script>
+  </body>
+</html>
