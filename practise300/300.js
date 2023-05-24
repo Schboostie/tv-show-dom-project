@@ -85,6 +85,13 @@ function handleSelectChange() {
   }
 }
 
+// Function to handle search input changes
+function handleSearchInput() {
+  const searchInput = document.getElementById("search-input");
+  const searchTerm = searchInput.value.trim();
+  displayEpisodes(searchTerm);
+}
+
 // Function to initialize the page
 function initializePage() {
   const episodes = getAllEpisodes();
